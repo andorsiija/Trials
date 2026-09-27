@@ -1,7 +1,5 @@
 import { apiFetch } from '../firebase-api.js';
 const uploads = [
-  {
-  }
 ];
 
 const grid = document.querySelector('#upload-grid');
