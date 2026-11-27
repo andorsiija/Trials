@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ViCom Studio | Commissions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../commission.css" />
+    <link rel="stylesheet" href="commissions.css" />
+    <link rel="stylesheet" href="../theme.css" />
+    <script src="../theme.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+  <body>
+    <!-- Artist sidebar (same as Artist side/index.html) -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">V</span>
+        <span>ViCom <small>STUDIO</small></span>
+      </a>
+      <nav>
+        <a href="discover.html"><span>🔍︎</span> Discover</a>
+      </nav>
+      <nav>
+        <p class="nav-label">Workspace</p>
+        <a href="index.html"><span>◈</span> Overview</a>
+        <a class="active" href="commissions.html"><span>✦</span> Commissions</a>
+        <a href="./profile.html"><span>▧</span> Portfolio</a>
+        <p class="nav-label second">Manage</p>
+        <a href="saved.html"><span>♡</span> Saved</a>
+        <a href="index.html#earnings"><span>↗</span> Earnings</a>
+        <a href="../Account%20functions/appeals.html"><span>⚑</span> Appeals</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-profile">
+          <span class="mini-avatar" id="artist-initials">--</span>
+          <div>
+            <strong id="artist-name">Artist</strong>
+            <small>Artist account</small>
+          </div>
+          <span>···</span>
+        </div>
+        <a class="profile-link" href="../Account%20functions/profile.html"
+          >Edit profile ↗</a
+        >
+        <button class="logout-button" id="logout">Log out</button>
+      </div>
+    </aside>
+
+    <!-- main workspace -->
+    <div class="workspace-area">
+      <header class="workspace-header">
+        <button class="mobile-nav" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <div>
+          <h1>Commissions</h1>
+          <p>Upload work and move each commission through its stages</p>
+        </div>
+        <div class="wh-right">
+          <div class="notification-wrap">
+            <button
+              class="icon-button"
+              id="notification"
+              aria-label="Notifications"
+            >
+              ◔<span class="notif-badge" aria-hidden="true">0</span>
+            </button>
+            <div
+              class="notification-dropdown"
+              id="notifications-menu"
+              role="menu"
+              aria-label="Notifications"
+            ></div>
+          </div>
+        </div>
+      </header>
+
+      <div class="commission-page">
+        <div class="comm-sidebar" id="comm-sidebar">
+          <p class="comm-empty">Loading…</p>
+        </div>
+        <div class="comm-main" id="comm-main"></div>
+      </div>
+
+      <footer class="workspace-footer">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">V</span>
+          <span>ViCom</span>
+        </a>
+        <span>Art for the wonderfully specific.</span>
+      </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <div class="feedback-overlay" id="feedback-overlay" aria-hidden="true">
+      <div
+        class="feedback-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="feedback-title"
+      >
+        <button
+          class="feedback-card-close"
+          id="feedback-close"
+          type="button"
+          aria-label="Close revision request"
+        >
+          ×
+        </button>
+        <h3 id="feedback-title">Request a revision</h3>
+        <p>
+          Tell the artist what you would like changed before approving this
+          stage.
+        </p>
+        <textarea
+          id="feedback-text"
+          placeholder="Describe the changes you need..."
+        ></textarea>
+        <div class="form-actions">
+          <button class="btn-secondary" id="feedback-cancel" type="button">
+            Cancel
+          </button>
+          <button class="btn-approve" id="feedback-send" type="button">
+            Send revision request
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+    <script type="module" src="../commission.js"></script>
+    <script type="module">
+      import { apiFetch } from "../supabase-api.js";
+      import { logoutUser } from "../Account functions/auth-service.js";
+      import { CommissionTracker } from "../commission.js";
+
+      let currentNotifications = [];
+      function setNotificationBadge(count) {
+        const bell = document.querySelector("#notification");
+        if (!bell) return;
+        const badge = bell.querySelector(".notif-badge");
+        if (!badge) return;
+        const total = Number(count) || 0;
+        badge.textContent = total > 9 ? "9+" : total;
+        badge.style.display = total > 0 ? "flex" : "none";
+      }
+      function renderNotifications(items) {
+        const menu = document.querySelector("#notifications-menu");
+        if (!menu) return;
+        const list = Array.isArray(items) ? items : [];
+        currentNotifications = list;
+        if (!list.length) {
+          menu.innerHTML =
+            '<div class="notification-header"><h3>Notifications</h3></div><p class="notification-empty">No new notifications.</p>';
+          setNotificationBadge(0);
+          return;
+        }
+        menu.innerHTML = `<div class="notification-header"><h3>Notifications</h3><button type="button" class="notification-clear">View all</button></div><div class="notification-list">${list.map((item, index) => `<button class="notification-item" type="button" data-index="${index}"><span class="notification-icon ${item.tone || "green"}">${item.icon || "✓"}</span><span class="notification-copy"><strong>${item.title}</strong><small>${item.detail}</small><time>${item.time}</time></span><span class="notification-dot" aria-hidden="true"></span></button>`).join("")}</div>`;
+        setNotificationBadge(list.length);
+      }
+      function toggleNotifications(forceOpen) {
+        const bell = document.querySelector("#notification");
+        const menu = document.querySelector("#notifications-menu");
+        if (!bell || !menu) return;
+        const shouldOpen =
+          typeof forceOpen === "boolean"
+            ? forceOpen
+            : !menu.classList.contains("open");
+        menu.classList.toggle("open", shouldOpen);
+        bell.classList.toggle("active", shouldOpen);
+        bell.setAttribute("aria-expanded", String(shouldOpen));
+      }
+      async function loadNotifications() {
+        const sess = JSON.parse(
+          localStorage.getItem("vicom-session") || "null",
+        );
+        try {
+          if (!sess?.userId) {
+            renderNotifications([]);
+            return;
+          }
+          const res = await apiFetch(
+            `../supabase-data?action=notifications&userId=${encodeURIComponent(sess.userId)}`,
+          );
+          const data = await res.json();
+          const list = (data.notifications || []).map((item, index) => ({
+            id: item.id || null,
+            commissionId: item.commissionId || item.commission_id || null,
+            kind: item.type || item.kind || "info",
+            icon:
+              item.type === "new_commission" ||
+              item.type === "commission_accepted"
+                ? "✦"
+                : item.type === "new_message"
+                  ? "✉"
+                  : item.type === "commission_declined"
+                    ? "↗"
+                    : "★",
+            tone:
+              item.type === "new_commission" ||
+              item.type === "commission_accepted"
+                ? "green"
+                : item.type === "new_message"
+                  ? "blue"
+                  : item.type === "commission_declined"
+                    ? "gold"
+                    : "green",
+            title:
+              item.title ||
+              (item.type === "new_message" ? "New message" : "Update"),
+            detail: item.text || "There is a fresh update for you.",
+            time: item.createdAt
+              ? new Date(item.createdAt).toLocaleDateString([], {
+                  month: "short",
+                  day: "numeric",
+                })
+              : `Now ${index + 1}`,
+          }));
+          renderNotifications(list);
+        } catch {
+          renderNotifications([]);
+        }
+      }
+      /* load artist info from session */
+      (function () {
+        try {
+          const sess = JSON.parse(
+            localStorage.getItem("vicom-session") || "null",
+          );
+          if (sess?.name) {
+            document.querySelector("#artist-name").textContent = sess.name;
+            document.querySelector("#artist-initials").textContent = sess.name
+              .split(/\s+/)
+              .map((p) => p[0])
+              .join("")
+              .slice(0, 2)
+              .toUpperCase();
+          }
+        } catch {}
+      })();
+
+      document
+        .querySelector("#notification")
+        ?.addEventListener("click", (event) => {
+          event.stopPropagation();
+          toggleNotifications();
+          if (!currentNotifications.length) loadNotifications();
+        });
+      document
+        .querySelector("#notifications-menu")
+        ?.addEventListener("click", (event) => {
+          const itemEl = event.target.closest(".notification-item");
+          if (!itemEl) return;
+          const item = currentNotifications[Number(itemEl.dataset.index)];
+          if (!item) return;
+          const targetId = item.commissionId || item.id;
+          window.location.href = targetId
+            ? `commissions.html?commissionId=${encodeURIComponent(targetId)}`
+            : "commissions.html";
+        });
+      document.addEventListener("click", (event) => {
+        const bell = document.querySelector("#notification");
+        const menu = document.querySelector("#notifications-menu");
+        if (!bell || !menu) return;
+        if (!bell.contains(event.target) && !menu.contains(event.target))
+          toggleNotifications(false);
+      });
+
+      document.querySelector("#logout")?.addEventListener("click", async () => {
+        await logoutUser();
+        localStorage.removeItem("vicom-session");
+        window.location.href = "../LandingPage/index.html";
+      });
+
+      loadNotifications();
+
+      /* boot tracker as artist */
+      const tracker = new CommissionTracker({ role: "artist" });
+      tracker.mount();
+    </script>
+  </body>
+</html>

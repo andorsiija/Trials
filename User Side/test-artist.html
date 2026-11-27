@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist Profile Test</title>
+  <link rel="stylesheet" href="test-artist.css">
+  <link rel="stylesheet" href="../theme.css">
+  <script src="../theme.js"></script>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body>
+  <h1>Artist Profile Diagnostic Tool</h1>
+  
+  <div class="section info">
+    <h2>URL Parameters</h2>
+    <p><strong>Artist ID from URL:</strong> <span id="url-artist-id">-</span></p>
+    <p><strong>Full URL:</strong> <span id="full-url">-</span></p>
+  </div>
+
+  <div class="section">
+    <h2>Test API Connection</h2>
+    <button id="test-api">Test Artist API</button>
+    <button id="list-artists">List All Artists</button>
+    <div id="api-result"></div>
+  </div>
+
+  <div class="section">
+    <h2>Session Info</h2>
+    <pre id="session-info">Loading...</pre>
+  </div>
+
+  <div class="section">
+    <h2>Console Logs</h2>
+    <pre id="console-logs"></pre>
+  </div>
+
+  <script type="module">
+    import { apiFetch } from '../supabase-api.js';
+
+    const logs = [];
+    function log(message, data = null) {
+      const timestamp = new Date().toISOString().split('T')[1].slice(0, 12);
+      const logEntry = `[${timestamp}] ${message}${data ? '\n' + JSON.stringify(data, null, 2) : ''}`;
+      logs.push(logEntry);
+      document.querySelector('#console-logs').textContent = logs.join('\n\n');
+      console.log(message, data);
+    }
+
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const artistId = urlParams.get('id');
+    
+    document.querySelector('#url-artist-id').textContent = artistId || '(not provided)';
+    document.querySelector('#full-url').textContent = window.location.href;
+    
+    log('Page loaded', { artistId, url: window.location.href });
+
+    // Show session info
+    try {
+      const session = JSON.parse(localStorage.getItem('vicom-session') || 'null');
+      document.querySelector('#session-info').textContent = JSON.stringify(session, null, 2);
+      log('Session loaded', { userId: session?.userId, role: session?.role });
+    } catch (error) {
+      document.querySelector('#session-info').textContent = 'Error: ' + error.message;
+      log('Session error', error.message);
+    }
+
+    // Test artist API
+    document.querySelector('#test-api').addEventListener('click', async () => {
+      const resultDiv = document.querySelector('#api-result');
+      resultDiv.innerHTML = '<p>Loading...</p>';
+      
+      if (!artistId) {
+        resultDiv.innerHTML = '<div class="section error"><p>No artist ID in URL. Add ?id=YOUR_ARTIST_ID to the URL</p></div>';
+        log('Test failed: No artist ID');
+        return;
+      }
+
+      try {
+        log('Testing API with artist ID', artistId);
+        const response = await apiFetch(`../supabase-data?action=artist&id=${encodeURIComponent(artistId)}`);
+        const text = await response.text();
+        log('API Response received', { status: response.status, ok: response.ok });
+        
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (parseError) {
+          throw new Error('Invalid JSON response: ' + text);
+        }
+
+        if (!response.ok) {
+          throw new Error(data.error || 'API returned error status: ' + response.status);
+        }
+
+        log('API Success', data);
+        resultDiv.innerHTML = `
+          <div class="section success">
+            <h3>✓ API Success</h3>
+            <p><strong>Artist:</strong> ${data.artist?.name || 'N/A'}</p>
+            <p><strong>Specialty:</strong> ${data.artist?.specialty || 'N/A'}</p>
+            <p><strong>Artworks:</strong> ${data.artworks?.length || 0}</p>
+            <p><strong>Rates:</strong> ${data.rates?.length || 0}</p>
+          </div>
+          <div class="section">
+            <h3>Full Response</h3>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          </div>
+        `;
+      } catch (error) {
+        log('API Error', error.message);
+        resultDiv.innerHTML = `
+          <div class="section error">
+            <h3>✗ API Error</h3>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    });
+
+    // List all artists
+    document.querySelector('#list-artists').addEventListener('click', async () => {
+      const resultDiv = document.querySelector('#api-result');
+      resultDiv.innerHTML = '<p>Loading artists...</p>';
+
+      try {
+        log('Fetching all artists');
+        const response = await apiFetch('../supabase-data?action=artists');
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to load artists');
+        }
+
+        log('Artists loaded', { count: data.artists?.length });
+        
+        if (!data.artists || data.artists.length === 0) {
+          resultDiv.innerHTML = '<div class="section info"><p>No artists found in database</p></div>';
+          return;
+        }
+
+        resultDiv.innerHTML = `
+          <div class="section success">
+            <h3>✓ Found ${data.artists.length} Artists</h3>
+            <ul>
+              ${data.artists.map(artist => `
+                <li>
+                  <strong>${artist.name}</strong> (${artist.specialty || 'No specialty'})
+                  <br>
+                  <small>ID: ${artist.id}</small>
+                  <br>
+                  <a href="artist.html?id=${artist.id}" target="_blank">View Profile</a>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      } catch (error) {
+        log('Error loading artists', error.message);
+        resultDiv.innerHTML = `
+          <div class="section error">
+            <h3>✗ Error</h3>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    });
+
+    // Auto-test if artist ID is present
+    if (artistId) {
+      log('Auto-testing with provided artist ID');
+      setTimeout(() => {
+        document.querySelector('#test-api').click();
+      }, 500);
+    } else {
+      log('No artist ID provided - click "List All Artists" to see available artists');
+    }
+  </script>
+</body>
+</html>

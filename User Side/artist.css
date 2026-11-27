@@ -1,0 +1,691 @@
+* {
+  box-sizing: border-box
+}
+
+body {
+  margin: 0;
+  background: #eef5ef;
+  color: #1d3027;
+  font: 14px 'DM Sans', Arial, sans-serif
+}
+
+.site-header {
+  height: 82px;
+  padding: 0 7vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #c7d8cc
+}
+
+.brand {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.04em;
+  color: inherit;
+  text-decoration: none
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: #3f8061;
+  color: white;
+  border-radius: 50% 45% 50% 42%;
+  font: 19px 'Playfair Display', Georgia, serif;
+  transform: rotate(-10deg)
+}
+
+.back-link {
+  color: #53675b;
+  font-size: 12px;
+  text-decoration: none
+}
+
+.back-link span {
+  color: #3f8061;
+  font-size: 16px;
+  margin-left: 7px
+}
+
+.artist-page {
+  padding: 0 10.5vw 100px
+}
+
+.artist-hero {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 35px;
+  align-items: center;
+  padding: 56px 0 48px;
+  border-bottom: 1px solid #c7d8cc
+}
+
+.artist-avatar {
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #d8b86a;
+  color: #1d3027;
+  font: 600 58px 'Playfair Display', Georgia, serif;
+  overflow: hidden;
+  position: relative
+}
+
+.artist-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  font-size: 10px;
+  font-weight: 700;
+  margin: 0 0 18px
+}
+
+.eyebrow span {
+  display: inline-block;
+  width: 26px;
+  height: 1px;
+  background: #3f8061
+}
+
+.artist-hero h1,
+.section-heading h2 {
+  font: 600 clamp(46px, 6vw, 76px)/.98 'Playfair Display', Georgia, serif;
+  letter-spacing: -.055em;
+  margin: 0 0 13px
+}
+
+.specialty {
+  color: #3f8061;
+  font-weight: 700;
+  margin: 0 0 15px
+}
+
+.artist-intro {
+  color: #53675b;
+  line-height: 1.7;
+  margin: 0 0 24px
+}
+
+.social-link {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 0 24px;
+  color: #3f8061;
+  border-bottom: 1px solid #3f8061;
+  padding-bottom: 5px;
+  font-size: 11px;
+  overflow-wrap: anywhere
+}
+
+.artist-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center
+}
+
+.commission-button {
+  display: block;
+  background: #1d3027;
+  color: #eef5ef;
+  padding: 14px 18px;
+  border: 0;
+  cursor: pointer;
+  font-size: 12px
+}
+
+.report-artist-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #7a8a80;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  transition: background .2s, color .2s, border-color .2s
+}
+
+.report-artist-button:hover {
+  background: #fdecea;
+  border-color: #f3c5c0;
+  color: #c94b4b
+}
+
+.report-artist-button:focus-visible {
+  outline: 2px solid #e45858;
+  outline-offset: 2px
+}
+
+.commission-button span {
+  font-size: 17px;
+  margin-left: 23px
+}
+
+.portfolio {
+  padding-top: 44px
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between
+}
+
+.section-heading h2 {
+  font-size: 49px
+}
+
+.work-count {
+  color: #64776a;
+  font-size: 11px
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 30px
+}
+
+.work-card {
+  min-width: 0
+}
+
+.work-image {
+  position: relative;
+  height: 320px;
+  background: #dcebe0 center/cover;
+  cursor: zoom-in
+}
+
+.work-image .heart {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: #eef5ef;
+  color: inherit;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer
+}
+
+.work-image .heart.saved {
+  color: #3f8061
+}
+
+.work-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 13px
+}
+
+.work-meta h3 {
+  font: 21px 'Playfair Display', Georgia, serif;
+  margin: 0 0 5px
+}
+
+.work-meta p {
+  font-size: 11px;
+  color: #53675b;
+  margin: 0
+}
+
+.work-meta strong {
+  font-size: 11px;
+  white-space: nowrap
+}
+
+.empty-state {
+  color: #53675b;
+  font-size: 12px;
+  margin-top: 30px
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  place-items: center;
+  padding: 40px;
+  background: rgba(29, 48, 39, .88)
+}
+
+.image-lightbox.open {
+  display: grid
+}
+
+.image-lightbox-picture {
+  width: min(100%, 1000px);
+  height: min(85vh, 760px);
+  background: center/contain no-repeat
+}
+
+.image-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  color: #eef5ef;
+  font-size: 34px;
+  line-height: 1
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translate(-50%, 20px);
+  background: #1d3027;
+  color: white;
+  padding: 13px 18px;
+  font-size: 12px;
+  opacity: 0;
+  transition: .25s
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0)
+}
+
+@media(max-width:700px) {
+  .site-header {
+    height: 70px;
+    padding: 0 6vw
+  }
+
+  .artist-page {
+    padding: 0 8vw 75px
+  }
+
+  .artist-hero {
+    display: block;
+    padding: 40px 0 36px
+  }
+
+  .artist-avatar {
+    width: 105px;
+    height: 105px;
+    font-size: 42px;
+    margin-bottom: 34px
+  }
+
+  .artist-hero h1 {
+    font-size: 52px
+  }
+
+  .portfolio {
+    padding-top: 36px
+  }
+
+  .section-heading {
+    display: block
+  }
+
+  .section-heading h2 {
+    font-size: 39px
+  }
+
+  .work-count {
+    display: block;
+    margin-top: 10px
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 30px
+  }
+
+  .work-image {
+    height: 340px
+  }
+
+  .back-link {
+    font-size: 11px
+  }
+}
+
+.rates-section {
+  padding-top: 75px
+}
+
+.rates-note {
+  color: #64776a;
+  font-size: 11px
+}
+
+.rates-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 30px
+}
+
+.rate-card {
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #d4e2d8
+}
+
+.rate-card-body {
+  padding: 20px
+}
+
+.rate-card-type {
+  margin: 0 0 9px;
+  color: #1d3027;
+  font: 600 20px 'Playfair Display', Georgia, serif
+}
+
+.rate-card-desc {
+  margin: 0 0 16px;
+  color: #53675b;
+  font-size: 12px;
+  line-height: 1.65
+}
+
+.rate-card-price {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #1d3027;
+  color: #eef5ef;
+  font-size: 13px;
+  font-weight: 700
+}
+
+@media(max-width:700px) {
+  .rates-section {
+    padding-top: 55px
+  }
+
+  .rates-grid {
+    grid-template-columns: 1fr
+  }
+}
+
+.report-button {
+  margin-top: 24px;
+  padding: 14px 20px;
+  background: #ffe6e1;
+  color: #e45858;
+  border: 1px solid #e45858;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.report-button:hover {
+  background: #e45858;
+  color: white;
+}
+
+.report-section {
+  padding: 40px 10.5vw;
+  text-align: center;
+  border-top: 1px solid #c7d8cc;
+  margin-top: 40px;
+}
+
+/* Report Modal Overlay */
+.report-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(29,48,39,.45);
+  z-index: 100;
+  place-items: center;
+  padding: 20px;
+}
+
+.report-modal-overlay.open { display: grid; }
+
+.report-modal {
+  background: #eef5ef;
+  width: min(500px, 100%);
+  padding: 32px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.report-modal h2 {
+  font: 600 22px 'Playfair Display', serif;
+  letter-spacing: -.03em;
+  margin: 0 0 6px;
+  color: #1d3027;
+}
+
+.report-modal p {
+  font-size: 13px;
+  color: #53675b;
+  margin: 0 0 20px;
+}
+
+.report-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  color: #53675b;
+  line-height: 1;
+}
+
+.report-modal label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #53675b;
+  margin-bottom: 5px;
+}
+
+.report-modal select,
+.report-modal textarea {
+  width: 100%;
+  border: 1px solid #c7d8cc;
+  border-radius: 7px;
+  padding: 10px 12px;
+  font: 13px 'DM Sans', sans-serif;
+  color: #1d3027;
+  background: #fff;
+  outline: none;
+  margin-bottom: 14px;
+  box-sizing: border-box;
+}
+
+.report-modal textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.report-modal select:focus,
+.report-modal textarea:focus {
+  border-color: #e45858;
+}
+
+.report-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.report-modal .btn-primary {
+  background: #e45858;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: 20px;
+  border: 0;
+  cursor: pointer;
+}
+
+.report-modal .btn-primary:hover {
+  background: #d14545;
+}
+
+.report-modal .btn-secondary {
+  border: 1px solid #c7d8cc;
+  color: #53675b;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 20px;
+  background: none;
+  cursor: pointer;
+}
+
+.report-modal .btn-secondary:hover {
+  border-color: #e45858;
+  color: #e45858;
+}
+
+/* Rates & services trigger button */
+.rates-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid #c7d8cc;
+  border-radius: 999px;
+  color: #1d3027;
+  padding: 11px 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  transition: background .2s, border-color .2s, color .2s;
+}
+
+.rates-button:hover {
+  border-color: #3f8061;
+  color: #3f8061;
+}
+
+.rates-button:focus-visible {
+  outline: 2px solid #3f8061;
+  outline-offset: 2px;
+}
+
+.rates-button-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: #3f8061;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Rates & services modal */
+.rates-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  place-items: center;
+  padding: 24px;
+  background: rgba(29, 48, 39, .45);
+  overflow-y: auto;
+}
+
+.rates-modal-overlay.open {
+  display: grid;
+}
+
+.rates-modal {
+  position: relative;
+  width: min(760px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: #eef5ef;
+  border-radius: 14px;
+  padding: 34px;
+  box-shadow: 0 24px 60px rgba(20, 34, 27, .28);
+}
+
+.rates-modal .section-heading {
+  margin-bottom: 4px;
+}
+
+.rates-modal .section-heading h2 {
+  font-size: 34px;
+}
+
+.rates-modal .rates-grid {
+  margin-top: 22px;
+}
+
+.rates-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+  color: #53675b;
+}
+
+.rates-modal-close:hover {
+  color: #1d3027;
+}
+
+@media(max-width:700px) {
+  .rates-modal {
+    padding: 26px 20px;
+  }
+
+  .rates-modal .section-heading {
+    display: block;
+  }
+
+  .rates-modal .section-heading h2 {
+    font-size: 28px;
+  }
+
+  .rates-modal .rates-note {
+    display: block;
+    margin-top: 8px;
+  }
+}

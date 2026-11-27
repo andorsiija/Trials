@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViCom | Appeals & Reports</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Artist side/style.css">
+  <link rel="stylesheet" href="appeals.css">
+  <link rel="stylesheet" href="../theme.css">
+  <script src="../theme.js"></script>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="../Artist side/index.html">
+      <span class="brand-mark">V</span>
+      <span>ViCom <small>STUDIO</small></span>
+    </a>
+    <nav>
+      <a href="../Artist side/discover.html"><span>🔍︎</span> Discover</a>
+    </nav>
+    <nav>
+      <p class="nav-label">Workspace</p>
+      <a href="../Artist side/index.html"><span>◈</span> Overview</a>
+      <a href="../Artist side/commissions.html"><span>✦</span> Commissions <b>0</b></a>
+      <a href="../Artist side/profile.html"><span>▧</span> Portfolio</a>
+      <p class="nav-label second">Manage</p>
+      <a href="../Artist side/saved.html"><span>♡</span> Saved</a>
+      <a href="../Artist side/index.html#earnings"><span>↗</span> Earnings</a>
+      <a class="active" href="appeals.html"><span>⚑</span> Appeals</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="mini-profile">
+        <span class="mini-avatar" id="artist-initials">--</span>
+        <div>
+          <strong id="artist-name">Artist</strong>
+          <small>Artist account</small>
+        </div>
+        <span>···</span>
+      </div>
+      <a class="profile-link" href="profile.html">Edit profile ↗</a>
+      <button class="logout-button" id="logout">Log out</button>
+    </div>
+  </aside>
+
+  <main class="appeals-main">
+    <button class="mobile-nav" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <section class="appeals-intro">
+      <p class="eyebrow"><span></span> Account standing</p>
+      <h1>Reports &amp;<br><em>appeals</em></h1>
+      <p>Review the reports you have made, and if your account was suspended you can send an appeal here for an admin to review.</p>
+    </section>
+
+    <section class="appeals-content">
+      <div class="appeals-grid">
+        <div class="appeal-block">
+          <h3>Account status</h3>
+          <div id="appeal-suspension"><p class="appeal-note">Loading account status…</p></div>
+        </div>
+        <div class="appeal-block">
+          <h3>Reports you made</h3>
+          <div id="appeal-reports"><p class="appeal-note">Loading reports…</p></div>
+        </div>
+        <div class="appeal-block">
+          <h3>Your appeals</h3>
+          <div id="appeal-history"><p class="appeal-note">Loading appeals…</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal-overlay" id="appeal-modal-overlay">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="appeal-modal-title">
+      <h3 id="appeal-modal-title">Submit an appeal</h3>
+      <p id="appeal-modal-context"></p>
+      <label for="appeal-message" class="appeal-label">Your appeal</label>
+      <textarea id="appeal-message" rows="5" placeholder="Explain what happened and why the decision should be reconsidered…"></textarea>
+      <div class="modal-actions">
+        <button class="btn-primary" id="appeal-submit" type="button">Submit appeal</button>
+        <button class="btn-secondary" id="appeal-cancel" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="appeals.js"></script>
+</body>
+</html>

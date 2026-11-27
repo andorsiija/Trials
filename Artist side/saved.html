@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your saved artwork collection from ViCom artists.">
+  <title>ViCom Studio | Saved Artworks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="discover.css">
+  <link rel="stylesheet" href="../theme.css">
+  <script src="../theme.js"></script>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body class="saved-page">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">V</span>
+      <span>ViCom <small>STUDIO</small></span>
+    </a>
+    <nav>
+      <a href="discover.html"><span>🔍︎</span> Discover</a>
+    </nav>
+    <nav>
+      <p class="nav-label">Workspace</p>
+      <a href="index.html"><span>◈</span> Overview</a>
+      <a href="commissions.html"><span>✦</span> Commissions <b>0</b></a>
+      <a href="profile.html"><span>▧</span> Portfolio</a>
+      <p class="nav-label second">Manage</p>
+      <a class="active" href="saved.html"><span>♡</span> Saved</a>
+      <a href="index.html#earnings"><span>↗</span> Earnings</a>
+      <a href="../Account%20functions/appeals.html"><span>⚑</span> Appeals</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="mini-profile">
+        <span class="mini-avatar" id="artist-initials">--</span>
+        <div>
+          <strong id="artist-name">Artist</strong>
+          <small>Artist account</small>
+        </div>
+        <span>···</span>
+      </div>
+      <a class="profile-link" href="../Account%20functions/profile.html">Edit profile ↗</a>
+      <button class="logout-button" id="logout">Log out</button>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <header class="workspace-header">
+      <button class="mobile-nav" aria-label="Open navigation" aria-expanded="false">☰</button>
+      <div>
+        <h1>Saved artworks</h1>
+        <p class="workspace-subtitle">Your collection of hearted artwork from independent artists</p>
+      </div>
+      <div class="workspace-header-controls">
+        <input id="search-input" type="search" placeholder="Search saved artworks" aria-label="Search saved artworks">
+        <span class="saved-count" id="saved-count">0 SAVED</span>
+      </div>
+    </header>
+
+    <section class="workspace-panel discover-panel">
+      <div class="upload-grid" id="upload-grid"></div>
+      <p class="uploads-empty" id="uploads-empty" hidden>You haven't saved any artworks yet. Heart artwork on the Discover page to build your collection.</p>
+    </section>
+
+    <footer class="workspace-footer">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">V</span>
+        <span>ViCom <small>STUDIO</small></span>
+      </a>
+      <small>Art for the wonderfully specific.</small>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="saved.js"></script>
+</body>
+</html>

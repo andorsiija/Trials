@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViCom Admin | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-style.css">
+  <link rel="stylesheet" href="../theme.css">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#top">
+      <span class="brand-mark">V</span>
+      <span>ViCom <small>ADMIN</small></span>
+    </a>
+    <nav>
+      <p class="nav-label">Management</p>
+      <a class="active" href="#dashboard"><span>◈</span> Dashboard</a>
+      <a href="#reports"><span>⚠</span> Reports <b id="report-count">0</b></a>
+      <a href="#appeals"><span>⚑</span> Appeals <b id="appeal-count">0</b></a>
+      <a href="#artists"><span>✦</span> Artists</a>
+      <a href="#users"><span>◍</span> Users</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="mini-profile">
+        <span class="mini-avatar" id="admin-initials">--</span>
+        <div>
+          <strong id="admin-name">Admin</strong>
+          <small>Administrator</small>
+        </div>
+      </div>
+      <button class="logout-button" id="logout">Log out</button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <main class="workspace" id="top">
+    <header class="workspace-header">
+      <button class="mobile-nav" id="mobile-nav" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+      <div>
+        <p class="kicker" id="todays-date"></p>
+        <h1>Admin Dashboard</h1>
+      </div>
+    </header>
+
+    <section class="stats" id="dashboard">
+      <div class="stat-card">
+        <span class="stat-icon coral">⚠</span>
+        <div>
+          <p>Pending Reports</p>
+          <strong id="pending-reports">0</strong>
+          <small>Awaiting review</small>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon red">⊘</span>
+        <div>
+          <p>Suspended Artists</p>
+          <strong id="suspended-count">0</strong>
+          <small>Currently inactive</small>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon blue">✦</span>
+        <div>
+          <p>Total Artists</p>
+          <strong id="total-artists">0</strong>
+          <small>Active & inactive</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="reports-section" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <p class="kicker">Moderation</p>
+          <h2>Reports</h2>
+        </div>
+        <select id="report-filter">
+          <option value="">All Reports</option>
+          <option value="pending">Pending</option>
+          <option value="reviewed">Reviewed</option>
+          <option value="dismissed">Dismissed</option>
+        </select>
+      </div>
+      <div class="reports-list" id="reports-list"></div>
+      <p class="empty-state" id="reports-empty">No reports found.</p>
+    </section>
+
+    <section class="panel" id="artists-section" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <p class="kicker">Management</p>
+          <h2>Artists</h2>
+        </div>
+        <input type="text" id="artist-search" placeholder="Search by name...">
+      </div>
+      <div class="artists-list" id="artists-list"></div>
+      <p class="empty-state" id="artists-empty">No artists found.</p>
+    </section>
+
+    <section class="panel" id="users-section" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <p class="kicker">Management</p>
+          <h2>Users</h2>
+        </div>
+        <input type="text" id="user-search" placeholder="Search by name...">
+      </div>
+      <div class="users-list" id="users-list"></div>
+      <p class="empty-state" id="users-empty">No users found.</p>
+    </section>
+
+    <section class="panel" id="appeals-section" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <p class="kicker">Moderation</p>
+          <h2>Appeals</h2>
+        </div>
+        <select id="appeal-filter">
+          <option value="">All Appeals</option>
+          <option value="pending">Pending</option>
+          <option value="accepted">Accepted</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+      <div class="appeals-list" id="appeals-list"></div>
+      <p class="empty-state" id="appeals-empty">No appeals found.</p>
+    </section>
+  </main>
+
+  <div class="modal" id="report-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="close-report-modal" type="button">×</button>
+      <p class="kicker">Report Details</p>
+      <h2 id="report-modal-title">Report</h2>
+      <div id="report-details"></div>
+      <div class="modal-actions">
+        <button class="btn-primary" id="approve-report">Mark Reviewed</button>
+        <button class="btn-secondary" id="dismiss-report">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="suspend-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="close-suspend-modal" type="button">×</button>
+      <p class="kicker">Suspension</p>
+      <h2 id="suspend-title">Suspend Artist</h2>
+      <label for="suspend-reason">Reason</label>
+      <textarea id="suspend-reason" placeholder="Enter suspension reason..."></textarea>
+      <label for="suspend-days">How many days?</label>
+      <select id="suspend-days">
+        <option value="1">1 day</option>
+        <option value="3">3 days</option>
+        <option value="7" selected>7 days</option>
+        <option value="14">14 days</option>
+        <option value="30">30 days</option>
+      </select>
+      <div class="modal-actions">
+        <button class="btn-primary" id="confirm-suspend">Confirm</button>
+        <button class="btn-secondary" id="cancel-suspend">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="appeal-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="close-appeal-modal" type="button">×</button>
+      <p class="kicker">Appeal Details</p>
+      <h2 id="appeal-modal-title">Appeal</h2>
+      <div id="appeal-details"></div>
+      <label for="appeal-admin-note">Admin note</label>
+      <textarea id="appeal-admin-note" placeholder="Add a note about your decision (optional)..."></textarea>
+      <div class="modal-actions">
+        <button class="btn-primary" id="accept-appeal">Accept appeal</button>
+        <button class="btn-secondary" id="reject-appeal">Reject appeal</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    document.querySelector('#todays-date').textContent =
+      new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }).toUpperCase();
+  </script>
+  <script type="module" src="admin-script.js"></script>
+</body>
+</html>

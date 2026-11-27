@@ -1,0 +1,126 @@
+/* ── Commissions page layout ── */
+
+/* push workspace content right of the fixed sidebar */
+body {
+  display: flex;
+}
+.workspace-area {
+  margin-left: 238px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.workspace-header {
+  height: 64px;
+  border-bottom: 1px solid #2e4e3c;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #eef5ef;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.workspace-header h1 {
+  font:
+    600 20px "Playfair Display",
+    serif;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #1d3027;
+}
+.workspace-header p {
+  font-size: 12px;
+  color: #64776a;
+  margin: 0;
+}
+.wh-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* commission-page fills remaining space */
+.commission-page {
+  flex: 1;
+  border-top: 1px solid #c7d8cc;
+}
+
+/* sidebar loading placeholder */
+.comm-sidebar .comm-empty {
+  padding: 20px 8px;
+  color: #8aa396;
+  font-size: 13px;
+}
+
+/* footer */
+.workspace-footer {
+  min-height: 70px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 11px;
+  color: #64776a;
+  border-top: 1px solid #c7d8cc;
+}
+.workspace-footer .brand {
+  color: #1d3027;
+}
+
+@media (max-width: 780px) {
+  body {
+    display: block;
+  }
+  .workspace-area {
+    margin-left: 0;
+  }
+  .sidebar {
+    display: block;
+    width: min(78vw, 280px);
+    transform: translateX(-120%);
+    transition: transform .25s ease;
+    box-shadow: 18px 0 40px rgba(16, 25, 21, .16);
+    z-index: 20;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .mobile-nav {
+    display: block;
+    font-size: 20px;
+    margin-right: 4px;
+    z-index: 21;
+  }
+  .workspace-header {
+    height: auto;
+    min-height: 64px;
+    padding: 12px 16px;
+    gap: 10px;
+  }
+  .workspace-header > div:first-of-type {
+    min-width: 0;
+    flex: 1;
+  }
+  .workspace-header h1 {
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .workspace-header p {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .workspace-footer {
+    padding: 18px 16px;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    height: auto;
+  }
+}

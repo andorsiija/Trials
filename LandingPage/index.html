@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ViCom is a warm, curated home for custom art commissions.">
+  <title>ViCom | Art made personal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="../theme.css">
+  <script src="../theme.js"></script>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="ViCom home">
+      <span class="brand-mark">V</span>
+      <span>ViCom</span>
+    </a>
+   <nav class="main-nav" aria-label="Main navigation">
+      <a href="discover.html">Discover</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#artists">For artists</a>
+    </nav>
+    <div class="header-actions">
+      <a class="text-button" href="../Account%20functions/auth.html?mode=signin">Log in</a>
+      <a class="text-button" href="../Account%20functions/auth.html?mode=signup">Sign up</a>
+      <a class="outline-button" href="../Account%20functions/auth.html?mode=artist">Join as an artist</a>
+      <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true"></div>
+  <aside class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+    <div class="mobile-menu-header">
+      <span class="brand-mark">V</span>
+      <button class="mobile-close" type="button" aria-label="Close menu">×</button>
+    </div>
+    <nav class="mobile-nav" aria-label="Mobile navigation links">
+      <a href="../Account%20functions/auth.html?mode=signin">Log in</a>
+      <a href="../Account%20functions/auth.html?mode=signup">Create account</a>
+      <a href="../Account%20functions/auth.html?mode=artist">Join as artist</a>
+      <a href="discover.html">Discover</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#artists">For artists</a>
+    </nav>
+  </aside>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> Original work, made for you</p>
+        <h1>To create<br><em>is to</em> live.</h1>
+        <p class="hero-description">Find an artist who gets your idea, then turn that spark into a one-of-a-kind piece worth keeping.</p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#discover">Browse artists <span>↗</span></a>
+          <button class="search-button" type="button" id="hero-search">
+            <span class="search-icon">⌕</span> Search commissions
+          </button>
+        </div>
+        <div class="hero-proof">
+          
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Featured commissioned artwork">
+        <div class="hero-image"></div>
+        <div class="scribble"></div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="ViCom highlights">
+      <div>For Inspiration</div>
+      <span>✦</span>
+      <div>For Artists</div>
+      <span>✦</span>
+      <div>For Clients</div>
+      <span>✦</span>
+      <div>For those with ideas</div>
+    </section>
+
+    <section class="discover-section" id="discover">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> Art Pieces</p>
+          <h2>Find Artists and their work</h2>
+        </div>
+        <div class="section-actions">
+          <button class="filter-button" id="filter-button" type="button" aria-expanded="false" aria-controls="price-filter-panel">
+            Filters <span aria-hidden="true">＋</span>
+          </button>
+        </div>
+      </div>
+      <div class="price-filter-panel" id="price-filter-panel" hidden>
+        <p class="filter-panel-note">Filters artworks by their starting price.</p>
+        <label>
+          Minimum price
+          <span class="price-input"><span aria-hidden="true">₱</span><input id="min-price" type="number" min="0" step="1" placeholder="0"></span>
+        </label>
+        <label>
+          Maximum price
+          <span class="price-input"><span aria-hidden="true">₱</span><input id="max-price" type="number" min="0" step="1" placeholder="No limit"></span>
+        </label>
+        <button class="clear-filter-button" id="clear-price-filter" type="button">Clear prices</button>
+      </div>
+      <div class="discover-toolbar">
+        <div class="category-tabs" role="tablist" aria-label="Art categories">
+          <button class="tab active" type="button" data-category="all">All work</button>
+          <button class="tab" type="button" data-category="portrait">Portraits</button>
+          <button class="tab" type="button" data-category="illustration">Illustration</button>
+          <button class="tab" type="button" data-category="painting">Painting</button>
+          <button class="tab" type="button" data-category="design">Design</button>
+        </div>
+      </div>
+      <div class="art-grid" id="art-grid"></div>
+      <p class="uploads-empty" id="uploads-empty" hidden>No uploads match this filter.</p>
+    </section>
+
+    <section class="process-section" id="how-it-works">
+      <div class="process-art"></div>
+      <div class="process-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> No awkward briefs</p>
+        <h2>Your idea,<br><em>their magic.</em></h2>
+        <p>It starts with an idea of a piece you want to be made in a specific way, an art style. 
+          Look for the artist that fits that description and request for a commission. Once accepted by the artist, 
+          you will be guided through the process of the creating the art piece you requested</p>
+        <a class="arrow-link" href="#discover">See how it works <span>→</span></a>
+      </div>
+    </section>
+
+    <section class="artist-cta" id="artists">
+      <div>
+        <p class="eyebrow light"><span class="eyebrow-line"></span> Made by independent creatives</p>
+        <h2>Your next favorite<br>artist is <em>here.</em></h2>
+      </div>
+      <a class="light-button" href="#discover">Meet the artists <span>↗</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="#top">
+      <span class="brand-mark">V</span>
+      <span>ViCom</span>
+    </a>
+    <span>Art for the wonderfully specific.</span>
+    <span>© 2026 ViCom</span>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="script.js?v=7"></script>
+</body>
+</html>

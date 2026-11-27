@@ -1,0 +1,158 @@
+/* ── Artist workspace page styles ── */
+
+/* ── Badge styles ── */
+nav a b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.18);
+  color: #c4d8cc;
+  margin-left: 4px;
+  line-height: 1;
+}
+nav a b.badge-active {
+  background: #e45858;
+  color: #fff;
+  animation: pop 0.25s ease;
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.7);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* notification bell badge */
+#notification {
+  position: relative;
+}
+.notif-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: #e45858;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+
+/* commission preview items in dashboard panel */
+.comm-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #e6efea;
+}
+.comm-preview-item:last-child {
+  border-bottom: none;
+}
+.comm-preview-item:hover {
+  background: #f4f9f6;
+}
+.comm-avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #c7d8cc;
+  color: #1d3027;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.comm-preview-item div {
+  flex: 1;
+  min-width: 0;
+}
+.comm-preview-item strong {
+  display: block;
+  font-size: 13px;
+  color: #1d3027;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.comm-preview-item small {
+  font-size: 11px;
+  color: #64776a;
+}
+.mini-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.status-pending {
+  background: #fff3cd;
+  color: #7a5a00;
+}
+.status-active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+.message-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 8px;
+  border: 1px solid #e7efe9;
+  border-radius: 12px;
+  background: #f7faf8;
+}
+.message-item .msg-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #3f8061;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.message-item strong {
+  display: block;
+  font-size: 12px;
+  color: #1d3027;
+  margin-bottom: 3px;
+}
+.message-item p {
+  margin: 0;
+  font-size: 12px;
+  color: #5d7167;
+  line-height: 1.4;
+}
+.message-item small {
+  display: block;
+  color: #7f978d;
+  margin-top: 4px;
+  font-size: 10px;
+}
